@@ -1,17 +1,21 @@
 from textblob import TextBlob
+import json
 
 class Sentiment_twiiter:
     def __init__(self):
         self.tfile = open('twitter.txt', 'r', encoding='utf-8')
+        self.tweets = [json.loads(line.strip()) for line in self.tfile.readlines()]
+        self.tweets_sentimanted = []
 
     def analyze(self):
 
+        self.get_tweet_sentiment()
         positives = 0
         negatives = 0
         neutral = 0
         all = 0
 
-        for tweet in self.tweets:
+        for tweet in self.tweets_sentimanted:
             if tweet['sentiment'] == 'positive':
                 positives += 1
             elif tweet['sentiment'] == 'negative':
@@ -24,30 +28,33 @@ class Sentiment_twiiter:
         print("negatives: ", negatives * 100 / all)
         print("neutral: ", neutral * 100 / all)
 
-    def get_tweets(self, keywords):
+    def get_tweet_sentiment(self):
 
-        tweets = self.api.search(q = keywords, lang = 'en', count = 1000)
+        for tw in self.tweets:
+            analysis = TextBlob(tw['text'])
+            if analysis.sentiment.polarity > 0:
+                self.tweets_sentimanted.append(
+                    {
+                        'text' : tw['text'],
+                        'sentiment' : 'positive'
+                    }
+                )
 
-        for tweet in tweets:
-            parsed_tweet = {'text': tweet.text, 'sentiment': self.get_tweet_sentiment(tweet.text)}
-            if tweet.retweet_count > 0:
-                if parsed_tweet not in self.tweets:
-                    self.tweets.append(parsed_tweet)
+            elif analysis.sentiment.polarity == 0:
+                self.tweets_sentimanted.append(
+                    {
+                        'text': tw['text'],
+                        'sentiment': 'neutral'
+                    }
+                )
+
             else:
-                self.tweets.append(parsed_tweet)
-            print(parsed_tweet['sentiment'])
+                self.tweets_sentimanted.append(
+                    {
+                        'text': tw['text'],
+                        'sentiment': 'negative'
+                    }
+                )
 
-        self.analyze()
-
-
-    def get_tweet_sentiment(self, tweet):
-
-        analysis = TextBlob(self.clean_tweets(tweet))
-        if analysis.sentiment.polarity > 0:
-            return 'positive'
-
-        elif analysis.sentiment.polarity == 0:
-            return 'neutral'
-
-        else:
-            return 'negative'
+ob = Sentiment_twiiter()
+ob.analyze()

@@ -9,7 +9,7 @@ class Twitter_streamer(tweepy.StreamListener):
         super().__init__()
         self.api = self.create_api()
         self.me = self.api.me()
-        self.file = open('twitter.txt', "a+")
+        self.file = open('twitter.txt', "a+", encoding='utf-8')
         self.counter = 0
 
     def create_api(self):
