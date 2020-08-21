@@ -24,6 +24,22 @@ class Sentiment_twiiter:
         print("negatives: ", negatives * 100 / all)
         print("neutral: ", neutral * 100 / all)
 
+    def get_tweets(self, keywords):
+
+        tweets = self.api.search(q = keywords, lang = 'en', count = 1000)
+
+        for tweet in tweets:
+            parsed_tweet = {'text': tweet.text, 'sentiment': self.get_tweet_sentiment(tweet.text)}
+            if tweet.retweet_count > 0:
+                if parsed_tweet not in self.tweets:
+                    self.tweets.append(parsed_tweet)
+            else:
+                self.tweets.append(parsed_tweet)
+            print(parsed_tweet['sentiment'])
+
+        self.analyze()
+
+
     def get_tweet_sentiment(self, tweet):
 
         analysis = TextBlob(self.clean_tweets(tweet))

@@ -1,9 +1,7 @@
 import tweepy, logging, re
 from confs import *
-from textblob import TextBlob
 
 logger = logging.getLogger()
-
 
 class Twitter_streamer(tweepy.StreamListener):
 
@@ -12,6 +10,7 @@ class Twitter_streamer(tweepy.StreamListener):
         self.api = self.create_api()
         self.me = self.api.me()
         self.file = open('twitter.txt', "a+")
+        self.counter = 0
 
     def create_api(self):
 
@@ -30,31 +29,28 @@ class Twitter_streamer(tweepy.StreamListener):
         return api
 
     def clean_tweets(self, tweet):
-
+        self.counter += 1
         return ' '.join(re.sub(r"(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\ / \ / \S+)", " ", tweet).split())
 
-    def get_tweets(self, keywords):
+    def stream(self,tweets_listener, keywords):
+        stream = tweepy.Stream(self.api.auth, tweets_listener)
+        stream.filter(track=keywords, languages=["en"])
 
-        tweets = self.api.search(q = keywords, lang = 'en', count = 1000)
-
-        for tweet in tweets:
-            parsed_tweet = {'text': tweet.text, 'sentiment': self.get_tweet_sentiment(tweet.text)}
-            if tweet.retweet_count > 0:
-                if parsed_tweet not in self.tweets:
-                    self.tweets.append(parsed_tweet)
-            else:
-                self.tweets.append(parsed_tweet)
-            print(parsed_tweet['sentiment'])
-
-        self.analyze()
-
+    def on_status(self, tweet):
+        print(f"{self.counter} tweet's collected.")
+        text = {
+            'text' : self.clean_tweets(tweet.text)
+        }
+        self.file.write(str(text))
+        self.file.write('\n')
 
     def on_error(self, status):
+        self.file.close()
         logger.error(status)
 
 def main(keywords):
     tweets_obj = Twitter_streamer()
-    tweets_obj.get_tweets(keywords)
+    tweets_obj.stream(tweets_obj, keywords)
 
 if __name__ == "__main__":
-    main("")
+    main("trump")
