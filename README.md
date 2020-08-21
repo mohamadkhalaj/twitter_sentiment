@@ -1,4 +1,4 @@
-# twitter_sentiment
+# Twitter sentiment
 Simple twitter streamer & sentiment.
 
 ## How to run
@@ -17,6 +17,6 @@ To run; Just use steps below:
   ```
 ## How to use
 
-1. First add keywords: python twitter_datamining.py trump OR python twitter_datamining.py trump usa.
+1. First add keywords: python twitter_datamining.py apple OR python twitter_datamining.py apple samsung.
 2. Wait to collect fresh tweets and then terminate app (if you don't, it collects all new tweets!).
 3. After tweets collected run sentiment.py and see the results.
