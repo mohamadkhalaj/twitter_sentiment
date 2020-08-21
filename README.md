@@ -16,7 +16,7 @@ To run; Just use steps below:
   pip install -r requirements.txt
   ```
 ## How to use
-# If twitter is not available in your country use VPN
+### If twitter is not available in your country use VPN
 1. First add keywords: python twitter_datamining.py apple OR python twitter_datamining.py apple samsung.
 2. Wait to collect fresh tweets and then terminate app (if you don't, it collects all new tweets!).
 3. After tweets collected run sentiment.py and see the results.
