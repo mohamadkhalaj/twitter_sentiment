@@ -11,7 +11,7 @@ To run; Just use steps below:
 
   ```bash
   git clone https://github.com/mohamadkhalaj/twitter_sentiment.git && cd twitter_sentiment
-  python3 -m venv venv  # Create virtualenv named build
+  python3 -m venv venv  # Create virtualenv named venv
   source venv/bin/activate
   pip install -r requirements.txt
   ```
