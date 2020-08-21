@@ -53,4 +53,4 @@ def main(keywords):
     tweets_obj.stream(tweets_obj, keywords)
 
 if __name__ == "__main__":
-    main("trump")
+    main(["trump"])
