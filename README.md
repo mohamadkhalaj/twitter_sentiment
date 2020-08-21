@@ -17,6 +17,6 @@ To run; Just use steps below:
   ```
 ## How to use
 
-1. First add keywords in twitter_datamining.py main function (example: ["trump", "donald trump"]).
+1. First add keywords: python twitter_datamining.py trump OR python twitter_datamining.py trump usa.
 2. Wait to collect fresh tweets and then terminate app (if you don't, it collects all new tweets!).
 3. After tweets collected run sentiment.py and see the results.
