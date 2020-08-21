@@ -50,6 +50,9 @@ class Twitter_streamer(tweepy.StreamListener):
         logger.error(status)
 
 def main(keywords):
+    if len(keywords) == 0:
+        print("Enter at least 1 keyword like:\npython twitter_datamining.py apple")
+        exit()
     print(keywords)
     tweets_obj = Twitter_streamer()
     tweets_obj.stream(tweets_obj, keywords)
