@@ -15,7 +15,7 @@ To run; Just use steps below:
   source venv/bin/activate
   pip install -r requirements.txt
   ```
-## Hot to use
+## How to use
 
 1. First add keywords in twitter_datamining.py main function (example: ["trump", "donald trump"]).
 2. Wait to collect fresh tweets and then terminate app (if you don't it collects all new tweets!).
