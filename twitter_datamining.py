@@ -1,5 +1,6 @@
 import tweepy, logging, re
 from confs import *
+import sys
 
 logger = logging.getLogger()
 
@@ -49,8 +50,9 @@ class Twitter_streamer(tweepy.StreamListener):
         logger.error(status)
 
 def main(keywords):
+    print(keywords)
     tweets_obj = Twitter_streamer()
     tweets_obj.stream(tweets_obj, keywords)
 
 if __name__ == "__main__":
-    main(["trump"])
+    main(sys.argv[1:])
