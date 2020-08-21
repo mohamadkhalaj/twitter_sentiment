@@ -4,7 +4,7 @@ import json
 class Sentiment_twiiter:
     def __init__(self):
         self.tfile = open('twitter.txt', 'r', encoding='utf-8')
-        self.tweets = [json.loads(line.strip()) for line in self.tfile.readlines()]
+        self.tweets = [json.loads(line.strip().replace("'",'"')) for line in self.tfile.readlines()]
         self.tweets_sentimanted = []
 
     def analyze(self):

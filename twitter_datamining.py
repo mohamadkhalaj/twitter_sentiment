@@ -39,7 +39,7 @@ class Twitter_streamer(tweepy.StreamListener):
     def on_status(self, tweet):
         print(f"{self.counter} tweet's collected.")
         text = {
-            'text' : self.clean_tweets(tweet.text)
+            "text" : f"{self.clean_tweets(tweet.text)}"
         }
         self.file.write(str(text))
         self.file.write('\n')
